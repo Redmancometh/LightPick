@@ -69,7 +69,7 @@
             <artifactId>factions</artifactId>
             <version>2.4.0</version>
             <scope>system</scope>
-            <systemPath>${basedir}/lib/factions-2.4.0.jar</systemPath>
+            <systemPath>${project.basedir}/lib/factions-2.4.0.jar</systemPath>
         </dependency>
     </dependencies>
 
