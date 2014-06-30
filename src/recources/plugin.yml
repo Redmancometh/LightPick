@@ -1,0 +1,3 @@
+name: ${artifactId}
+main: com.strongholdcraft.lightpick.LightPick
+version: ${version}

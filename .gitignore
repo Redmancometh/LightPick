@@ -1,0 +1,30 @@
+*~
+*.lock
+*.DS_Store
+*.swp
+*.out
+*bin/
+
+# Windows stuff
+*Thumbs.db
+*Desktop.ini
+
+# Package Files #
+*.war
+*.ear
+
+# Maven #
+*target/
+
+# Others #
+*.class
+
+# Eclipse
+*.classpath
+*.project
+*.jardesc
+*.settings/
+
+# IntellIj
+*.idea/
+*.iml
