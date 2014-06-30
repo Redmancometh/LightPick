@@ -1,4 +1,4 @@
-package LightPick;
+package com.strongholdcraft.lightpick;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
