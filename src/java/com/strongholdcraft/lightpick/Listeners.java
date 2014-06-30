@@ -1,6 +1,6 @@
 package com.strongholdcraft.lightpick;
 
-import com.massivecraft.factions.entity.Faction;
+import com.massivecraft.factions.*;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
