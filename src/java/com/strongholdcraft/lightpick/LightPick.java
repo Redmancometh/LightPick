@@ -6,6 +6,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -16,19 +17,36 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class LightPick extends JavaPlugin {
+	private WorldGuardPlugin wg = null;
+	private List<String> pickaxes = new ArrayList<String>();
+
+	@Override
+	public void onLoad() {
+		if (!this.getDataFolder().exists() && this.getConfig() == null) {
+			this.saveDefaultConfig();
+		}
+		FileConfiguration config = this.getConfig();
+		pickaxes = config.getStringList("pickaxes");
+	}
+
 	@Override
 	public void onEnable() {
+		wg = (WorldGuardPlugin) this.getServer().getPluginManager().getPlugin("WorldGuard");
 		PluginManager pm = Bukkit.getServer().getPluginManager();
+
 		pm.registerEvents(new Listener() {
 			@EventHandler
 			public void placeTorch(final PlayerInteractEvent event) {
-				Material m = event.getPlayer().getItemInHand().getType();
-				if ((m == Material.WOOD_PICKAXE || m == Material.STONE_PICKAXE || m == Material.IRON_PICKAXE || m == Material.GOLD_PICKAXE || m == Material.DIAMOND_PICKAXE) && event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
-					Player p = event.getPlayer();
-					FPlayer fp = FPlayers.i.get(p);
-					WorldGuardPlugin wg = (WorldGuardPlugin) p.getServer().getPluginManager().getPlugin("WorldGuard");
-					Faction faction = Board.getFactionAt(new FLocation(event.getClickedBlock()));
+				final Action action = event.getAction();
+				final Material material = event.getPlayer().getItemInHand().getType();
+				if (isPickaxe(material) && action.equals(Action.RIGHT_CLICK_BLOCK)) {
+					final Player p = event.getPlayer();
+					final FPlayer fp = FPlayers.i.get(p);
+					final Faction faction = Board.getFactionAt(new FLocation(event.getClickedBlock()));
 					if ((fp.getFaction() == faction || faction.isNone()) && wg.canBuild(p, event.getClickedBlock())) {
 						Inventory pi = p.getInventory();
 						if (pi.contains(Material.TORCH)) {
@@ -46,5 +64,18 @@ public class LightPick extends JavaPlugin {
 				}
 			}
 		}, this);
+	}
+
+	/**
+	 * @param material
+	 * @return
+	 */
+	private boolean isPickaxe(Material material) {
+		for (String pickaxe : pickaxes) {
+			if (Material.valueOf(pickaxe) == material) {
+				return true;
+			}
+		}
+		return false;
 	}
 }
