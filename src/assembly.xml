@@ -8,8 +8,8 @@
     </formats>
     <files>
         <file>
-            <source>${project.build.directory}/${artifactId}-${version}.jar</source>
-            <destName>${artifactId}.jar</destName>
+            <source>${project.build.directory}/${project.artifactId}-${project.version}.jar</source>
+            <destName>${project.artifactId}.jar</destName>
             <outputDirectory>/</outputDirectory>
             <filtered>false</filtered>
         </file>
