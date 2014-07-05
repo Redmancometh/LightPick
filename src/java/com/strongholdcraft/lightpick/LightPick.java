@@ -35,31 +35,39 @@ public class LightPick extends JavaPlugin {
 
 	@Override
 	public void onEnable() {
-		wg = (WorldGuardPlugin) this.getServer().getPluginManager().getPlugin("WorldGuard");
+		wg = (WorldGuardPlugin) this.getServer().getPluginManager()
+				.getPlugin("WorldGuard");
 		PluginManager pm = Bukkit.getServer().getPluginManager();
 
 		pm.registerEvents(new Listener() {
 			@EventHandler
 			public void placeTorch(final PlayerInteractEvent event) {
 				final Action action = event.getAction();
-				final Material material = event.getPlayer().getItemInHand().getType();
-				if (isPickaxe(material) && action.equals(Action.RIGHT_CLICK_BLOCK)) {
+				final Material material = event.getPlayer().getItemInHand()
+						.getType();
+				if (isPickaxe(material)
+						&& action.equals(Action.RIGHT_CLICK_BLOCK)) {
 					final Player p = event.getPlayer();
 					final FPlayer fp = FPlayers.i.get(p);
-					final Faction faction = Board.getFactionAt(new FLocation(event.getClickedBlock()));
-					if ((fp.getFaction() == faction || faction.isNone()) && wg.canBuild(p, event.getClickedBlock())) {
+					final Faction faction = Board.getFactionAt(new FLocation(
+							event.getClickedBlock()));
+					if ((fp.getFaction() == faction || faction.isNone())
+							&& wg.canBuild(p, event.getClickedBlock())) {
 						Inventory pi = p.getInventory();
 						if (pi.contains(Material.TORCH)) {
-							Block relative = event.getClickedBlock().getRelative(event.getBlockFace());
+							Block relative = event.getClickedBlock()
+									.getRelative(event.getBlockFace());
 							if (relative.getType() != Material.TORCH) {
 								relative.setType(Material.TORCH);
 								pi.remove(new ItemStack(Material.TORCH, 1));
 							}
 						} else {
-							p.sendMessage(ChatColor.DARK_RED + "You're out of torches!");
+							p.sendMessage(ChatColor.DARK_RED
+									+ "You're out of torches!");
 						}
 					} else {
-						p.sendMessage(ChatColor.DARK_RED + "You can't place a torch here");
+						p.sendMessage(ChatColor.DARK_RED
+								+ "You can't place a torch here");
 					}
 				}
 			}
