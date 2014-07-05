@@ -26,9 +26,8 @@ public class LightPick extends JavaPlugin {
 
 	@Override
 	public void onLoad() {
-		if (!this.getDataFolder().exists() && this.getConfig() == null) {
+		if (!this.getDataFolder().exists() && this.getConfig() == null)
 			this.saveDefaultConfig();
-		}
 		FileConfiguration config = this.getConfig();
 		pickaxes = config.getStringList("pickaxes");
 	}
@@ -61,14 +60,12 @@ public class LightPick extends JavaPlugin {
 								relative.setType(Material.TORCH);
 								pi.remove(new ItemStack(Material.TORCH, 1));
 							}
-						} else {
+						} else
 							p.sendMessage(ChatColor.DARK_RED
 									+ "You're out of torches!");
-						}
-					} else {
+					} else
 						p.sendMessage(ChatColor.DARK_RED
 								+ "You can't place a torch here");
-					}
 				}
 			}
 		}, this);
@@ -79,11 +76,9 @@ public class LightPick extends JavaPlugin {
 	 * @return
 	 */
 	private boolean isPickaxe(Material material) {
-		for (String pickaxe : pickaxes) {
-			if (Material.valueOf(pickaxe) == material) {
+		for (String pickaxe : pickaxes)
+			if (Material.valueOf(pickaxe) == material)
 				return true;
-			}
-		}
 		return false;
 	}
 }
